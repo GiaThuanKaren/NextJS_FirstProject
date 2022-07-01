@@ -1,13 +1,22 @@
-function Home({ data }) {
-  console.log(data);
+import Link from "next/link"
+function Home({data} ) {
+//   console.log();
   return (
     <>
       <h1>Home Page</h1>
+      <Link href="/about">
+        User
+      </Link>
       {data.map(function (item, idx) {
         return (
           <>
-            <p>{item.name}</p>
-            <p>{item.email}</p>
+            <Link href={`/post/${item.id}`} passHref>
+            <a>{item.id}</a>
+            </Link>
+              <p></p>
+            <p>{item.title}</p>
+            
+            <p>{item.body}</p>
           </>
         );
       })}
@@ -17,19 +26,7 @@ function Home({ data }) {
 
 export default Home;
 export async function getStaticProps() {
-  // fetch("https://jsonplaceholder.typicode.com/users")
-  //     .then(res=>res.json())
-  //     .then(item=>{
-  //         return {
-  //             props: {
-  //               data: item,
-  //             },
-  //           };
-  //     })
-  //     .catch(e=>{
-  //         console.log(e)
-  //     })
-  const respone = await fetch("https://jsonplaceholder.typicode.com/users");
+  const respone = await fetch("https://jsonplaceholder.typicode.com/posts");
   const resutl = await respone.json();
   return {
     props: {
